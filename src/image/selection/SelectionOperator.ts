@@ -4,7 +4,6 @@ import * as _ from "lodash";
 import { connectPoints } from "../imageHelper";
 import { simplify } from "../simplify/simplify";
 import { slpf } from "../polygon-fill/slpf";
-import * as uuid from "uuid";
 import { encode } from "../rle";
 import { Selection } from "./Selection";
 
@@ -54,6 +53,12 @@ export abstract class SelectionOperator {
   select(category: Category): void {
     if (!this.boundingBox || !this.contour || !this.mask) return;
 
-    this.selection = new Selection(category, this.mask);
+    this.selection = new Selection(
+      category,
+      this.contour,
+      this.mask,
+      this.image.width,
+      this.image.height
+    );
   }
 }

@@ -144,7 +144,10 @@ export const Stage = ({ category, src }: StageProps) => {
   useEffect(() => {
     if (!operator) return;
 
-    if (operator.selected) setSelected(operator.selected);
+    if (operator.selected) {
+      operator.select(category);
+      setSelected(operator.selected);
+    }
   });
 
   useEffect(() => {
@@ -316,12 +319,12 @@ export const Stage = ({ category, src }: StageProps) => {
           <SelectionComponent operation={operation} operator={operator} />
         )}
 
-        {selected && selection && selection.contour && (
+        {selected && operator && operator.selection && (
           <React.Fragment>
             <ReactKonva.Line
               dash={[4, 2]}
               dashOffset={-dashOffset}
-              points={selection.contour}
+              points={operator.selection.contour}
               ref={selectingRef}
               stroke="black"
               strokeWidth={1}
@@ -330,7 +333,7 @@ export const Stage = ({ category, src }: StageProps) => {
             <ReactKonva.Line
               dash={[4, 2]}
               dashOffset={-dashOffset}
-              points={selection.contour}
+              points={operator.selection.contour}
               stroke="white"
               strokeWidth={1}
             />
